@@ -8,6 +8,20 @@ angular.module('uploadApp')
     $http.get('scripts/users.json').success(function(data) {
       $scope.users = data;
     });
+    $scope.theTime = function() {
+      var time;
+      var date = new Date();
+      time = date.getHours()*3600;
+      time += date.getMinutes()*60;
+      time += date.getSeconds();
+      return time;
+    };
+    $scope.maxTime = function() {
+      return 86400;
+    };
+    $scope.percentage = function(a, b) {
+      return Math.round((a/b)*100);
+    };
     $scope.usage = function() {
       //var value = Math.floor((Math.random() * 100) + 1);
       var type, value=50;

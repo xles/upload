@@ -17,13 +17,14 @@
 		</form>
 		-->
 		<p class="navbar-text navbar-right">250 / 500 MB</p>
-		<progressbar value="50" type="success">50%</progressbar>
+		<progressbar value="theTime()" type="success" max="maxTime()">{{percentage(theTime(),maxTime())}}%</progressbar>
 	</div><!--/.nav-collapse -->
 </div>
 
 <div class="container-fluid" ng-controller="MainCtrl">
 	<div class="row">
-		<div ng-class="selectedFile ? 'col-md-6' : 'col-md-12'">
+		<div ng-class="selectedFile ? 'col-md-6' : 'col-md-12'" 
+			style="transition: width ease-in-out 0.5s;">
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -36,10 +37,10 @@
 				<tbody>
 					<tr ng-repeat="file in files" ng-click="toggleSelect(file)">
 						<td>
-						 	<img ng-src="/images/ext-icons/16px/{{file.ext}}.png" fallback-src="/images/ext-icons/16px/_blank.png" alt="{{file.mimetype}}">
+						 	<img ng-src="images/ext-icons/16px/{{file.ext}}.png" fallback-src="images/ext-icons/16px/_blank.png" alt="{{file.mimetype}}">
 							<a href="{{file.path}}">{{file.name}}</a>
 						</td>
-						<td ng-click"foo = $index">{{readable(file.size)}}</td>
+						<td>{{readable(file.size)}}</td>
 						<td>
 							<time datetime="{{file.modified *1000 | date:'yyyy-MM-ddTHH:mm:ssZ'}}">
 								{{file.modified *1000 | date:'shortDate'}}
@@ -50,12 +51,14 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-6" ng-show="selectedFile">
+		<div class="col-md-6 foo" ng-show="selectedFile" style="
+    transition: opacity ease-in-out 0.5s 0.5s;">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					
-					<img ng-src="/images/ext-icons/512px/{{selectedFile.ext}}.png" 
-						fallback-src="/images/ext-icons/512px/_blank.png" alt="{{selectedFile.mimetype}}" class="img-responsive" style="margin:auto;">
+					<img ng-src="images/ext-icons/512px/{{selectedFile.ext}}.png" 
+						fallback-src="images/ext-icons/512px/_blank.png" alt="{{selectedFile.mimetype}}" 
+						class="img-responsive" style="margin:auto;">
 					<div class="well well-lg">
 						<dl class="dl-horizontal">
 						  <dt>Filename</dt>
