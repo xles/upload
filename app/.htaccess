@@ -541,3 +541,8 @@ FileETag None
 # <IfModule mod_headers.c>
 #    Header set Connection Keep-Alive
 # </IfModule>
+
+<Files "conf.json">
+Order Allow,Deny
+Deny from all
+</Files>

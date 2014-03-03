@@ -3,4 +3,5 @@ dist
 .tmp
 .sass-cache
 app/bower_components
-backend/conf.php
+backend/conf.*
+!backend/conf.default.*

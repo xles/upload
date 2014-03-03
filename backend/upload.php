@@ -1,19 +1,44 @@
 <?php 
 
 session_start();
-include "conf.php";
 
 class Upload {
 	private $hide = ['.','..'];
+	private $config;
+	private $db;
 
 	public function __construct()
 	{
-		return 0;
+		$json = file_get_contents("conf.json");
+		if (($this->config = json_decode($json)) == NULL)
+			throw new Exception('Unable to parse configuration file.');
+
+		#$this->connect();
+	}
+
+	private function connect()
+	{
+		$this->db = new mysqli(
+			$this->config->database->server,
+			$this->config->database->user,
+			$this->config->database->password,
+			$this->config->database->database,
+			$this->config->database->port
+		);
+		
+		if ($this->db->connect_errno) {
+			echo "Failed to connect to MySQL: (" . $this->db->connect_errno . ") " . $this->db->connect_error;
+		}
 	}
 
 	private function is_safe($filename)
 	{
-		$exts = ['gif','tga','eps','bmp','jpg','jpeg','pdf'];
+		$exts = ['gif', 'png', 'apng', 'jpg', 
+			'jpeg', 'bmp', 'svg', 'pdf'];
+		if (in_array($ext, $exts))
+			return true;
+		else
+			return false;
 	}
 
 	private function is_binary($filename)
@@ -29,16 +54,19 @@ class Upload {
 		}
 	}
 
-	private function dirsize($dir) 
+	private function dirsize($dir, $recursive = false) 
 	{
-		if ($dir[strlen($dir)-1] != DIRECTORY_SEPARATOR)
-			$dir .= DIRECTORY_SEPARATOR;
+		if ($dir[strlen($dir)-1] != '/')
+			$dir .= '/';
 		$size = 0;
-		if ($fp = opendir($dir)) {
+		if ($fp = @opendir($dir)) {
 			while (false !== ($file = readdir($fp))) { 
 				$path = $dir.$file;
-				if (!in_array($file, $this->hide)) { 
-					$size += filesize($path);
+				if (!in_array($file, $this->hide)) {
+					if (is_dir($path) && $recursive)
+						$size += $this->dirsize($path, true);
+					else 
+						$size += filesize($path);
 				}
 			}
 			closedir($fp);
@@ -48,15 +76,39 @@ class Upload {
 		}
 	}
 
-	public function list_users()
+	public function list_users($target_dir)
 	{
-		return;
+		if ($target_dir[strlen($target_dir)-1] != '/')
+			$target_dir .= '/';
+
+		if ($handle = opendir($target_dir)) {
+			while (false !== ($dir = readdir($handle))) { 
+				if ((!in_array($dir, $this->hide))) {
+					$dirs[] = $dir;
+				} 
+			} 
+			closedir($handle); 
+		} else {
+			return false;
+		}
+
+		foreach ($dirs as $dir) {
+			$path = $target_dir.$dir;
+			if ($size = $this->dirsize($path))
+				$tmp[] = [
+					'name' => $dir,
+					'path' => $path,
+					'size' => $size
+				];
+		}
+		return $tmp;
 	}
 
 	public function list_files($target_dir) 
 	{
 		if ($target_dir[strlen($target_dir)-1] != '/')
 			$target_dir .= '/';
+
 		if ($handle = opendir($target_dir)) { 
 			while (false !== ($file = readdir($handle))) { 
 				if (!in_array($file, $this->hide)) { 
@@ -68,6 +120,7 @@ class Upload {
 			return false;
 		}
 
+		$finfo = new finfo(FILEINFO_MIME);
 		foreach ($files as $file) {
 			$path = $target_dir.$file;
 			$tmp[] = [
@@ -75,10 +128,11 @@ class Upload {
 				'ext'      => strrchr($file, "."),
 				'path'     => $path,
 				'size'     => @filesize($path),
-				'modified' => filemtime($path)
+				'modified' => filemtime($path),
+				'mimetype' => $finfo->file($path)
 			];
 		}
-		return json_encode(['files' => $tmp], JSON_PRETTY_PRINT);
+		return $tmp;
 	} 	  
 
 	public function __destruct()

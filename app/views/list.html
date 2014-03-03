@@ -1,0 +1,50 @@
+<div class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">
+			Upload
+		</a>
+		<form class="navbar-form navbar-right">
+		  <div class="form-group">
+		    <input type="file">
+		  </div>
+		  <button type="submit" class="btn btn-primary">Upload</button>
+		</form>
+		<progressbar value="50" type="success">50%</progressbar>
+	</div><!--/.nav-collapse -->
+</div>
+
+<div class="container-fluid" ng-controller="MainCtrl">
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>file.name</th>
+						<th>file.size</th>
+						<th>file.modified</th>
+						<th>file.mimetype</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="file in files" ng-click"preview(file.name)">
+						<td>
+						 	<img ng-src="/images/ext-icons/16px/{{file.ext}}.png" fallback-src="/images/ext-icons/16px/_blank.png" alt="{{file.mimetype}}">
+							<a href="{{file.path}}">{{file.name}}</a>
+						</td>
+						<td>{{readable(file.size)}}</td>
+						<td>
+							{{file.modified *1000 | date:'yyyy-MM-dd'}}
+						</td>
+						<td>{{file.mimetype}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<div class="well well-lg">
+				<img src="images/ext-icons/512px/_page.png" class="img-responsive" alt="icon">
+				<time>{{'1393784472' *1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</time>
+			</div>
+		</div>
+	</div>
+</div>
