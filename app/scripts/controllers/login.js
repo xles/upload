@@ -7,5 +7,5 @@ angular.module('uploadApp')
       'AngularJS',
       'Karma'
     ];
-    $scope.test = "foo";
+    $scope.test = 'foo';
   });
