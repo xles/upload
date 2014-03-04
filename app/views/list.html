@@ -5,10 +5,49 @@
 			Upload
 		</a>
 		-->
-		<div class="navbar-header navbar-left">
-			<button type="submit" class="btn btn-primary navbar-btn" style="margin-right:15px;">Upload new file</button>
+		<div class="navbar-header navbar-left" ng-controller="ModalDemoCtrl">
+	    <script type="text/ng-template" id="uploadModal.html">
+				<form role="form" class="form-horizontal">
+	        <div class="modal-header">
+	            <button class="btn btn-warning pull-right" ng-click="cancel()">Cancel</button>
+	            <h3>Upload new file</h3>
+	        </div>
+	        <div class="modal-body">
+					  <div class="form-group">
+					    <label for="exampleInputFile" class="col-sm-4 control-label">Select file to upload</label>
+					    <div class="col-sm-8">
+						    <input type="file" id="exampleInputFile">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInputEmail1" class="col-sm-4 control-label">Custom filename</label>
+					    <div class="col-sm-8">
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="filename">
+							  <span class="input-group-addon">.ext</span>
+					    </div>
+						    <p class="help-block">Leave blank for default.</p>
+					    </div>
+					  </div> 
+				  <div class="form-group">
+				    <div class="col-sm-offset-4 col-sm-8">
+				      <div class="checkbox">
+				        <label>
+				          <input type="checkbox"> Force overwrite if file exists.
+				        </label>
+				      </div>
+				    </div>
+				  </div>
+ 	        </div>
+	        <div class="modal-footer">
+						<button class="btn btn-primary btn-block btn-lg" ng-click="ok()">Upload file</button>
+	        </div>
+				</form>
+	    </script>
+			<button ng-click="open()" class="btn btn-primary navbar-btn" style="margin-right:15px;">Upload new file</button>
 		</div>
 		<!--
+	    <button class="btn btn-default">Open me!</button>
 		<form class="navbar-form navbar-right">
 		  <div class="form-group">
 		    <input type="file">
@@ -16,15 +55,31 @@
 		  <button type="submit" class="btn btn-primary">Upload new file</button>
 		</form>
 		-->
-		<p class="navbar-text navbar-right">250 / 500 MB</p>
-		<progressbar value="theTime()" type="success" max="maxTime()">{{percentage(theTime(),maxTime())}}%</progressbar>
+		<ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+        <ul class="dropdown-menu">
+          <li>
+          	<div class="text-center">
+	          	<img src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" 
+	          		class="img-circle img-thumbnail">
+	          	<p class="lead">user</p>
+          	</div>
+          </li>
+          <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
+          <li class="divider"></li>
+          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+        </ul>
+      </li>
+    </ul>
+		<p class="navbar-text navbar-right">{{readable(usage.used)}} / {{readable(usage.total)}}</p>
+		<progressbar value="usage.used" type="{{usage.state}}" max="usage.total">{{usage.percentage}}%</progressbar>
 	</div><!--/.nav-collapse -->
 </div>
 
 <div class="container-fluid" ng-controller="MainCtrl">
 	<div class="row">
-		<div ng-class="selectedFile ? 'col-md-6' : 'col-md-12'" 
-			style="transition: width ease-in-out 0.5s;">
+		<div ng-class="selectedFile ? 'col-md-6 squeeze' : 'col-md-12 stretch'">
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -51,9 +106,8 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-6 foo" ng-show="selectedFile" style="
-    transition: opacity ease-in-out 0.5s 0.5s;">
-			<div class="panel panel-default">
+		<div class="col-md-6" ng-show="selectedFile" ng-class="selectedFile ? 'fadein' : 'fadeout'">
+			<div class="panel panel-default preview">
 				<div class="panel-body">
 					
 					<img ng-src="images/ext-icons/512px/{{selectedFile.ext}}.png" 

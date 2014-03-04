@@ -95,3 +95,29 @@ body {
     position: relative;
     top: 15px;
 }
+
+.squeeze {
+    transition: width ease-in-out 0.3s 0s;
+}
+.stretch {
+    transition: width ease-in-out 0.3s 0.3s;
+}
+.preview {
+    position: fixed;
+    bottom: 0;
+    width: 50%;
+    margin-left: 15px;
+    top: 70px;
+    right: 15px;
+    overflow-y: scroll;
+}
+.fadeout.ng-hide {
+    display: initial!important;
+    right: -50%;
+}
+.fadein {
+    transition: all ease-in-out 0.3s 0.3s;
+}
+.fadeout {
+    transition: all ease-in-out 0.3s 0s;
+}

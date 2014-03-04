@@ -6,7 +6,7 @@ angular.module('uploadApp')
       $scope.files = data.files;
     });
     $http.get('scripts/users.json').success(function(data) {
-      $scope.users = data;
+      $scope.users = data.users;
     });
     $scope.theTime = function() {
       var time;
@@ -22,25 +22,26 @@ angular.module('uploadApp')
     $scope.percentage = function(a, b) {
       return Math.round((a/b)*100);
     };
-    $scope.usage = function() {
-      //var value = Math.floor((Math.random() * 100) + 1);
-      var type, value=50;
-
-      if (value < 25) {
-        type = 'success';
-      } else if (value < 50) {
-        type = 'info';
-      } else if (value < 75) {
-        type = 'warning';
+    $scope.getUsageState = function(percentage) {
+      console.log('percentage: ' + percentage);
+      if (percentage < 75) {
+        return 'success';
+      } else if (percentage < 90) {
+        return 'warning';
       } else {
-        type = 'danger';
+        return 'danger';
       }
-
-      //$scope.showWarning = (type === 'danger' || type === 'warning');
-
-      //$scope.dynamic = value;
-      $scope.type = type;
     };
+    console.log($scope.getUsageState(99));
+    
+    var u  = {};
+    u.used = $scope.theTime();
+    u.total = $scope.maxTime();
+    u.percentage = $scope.percentage(u.used,u.total);
+    u.state = $scope.getUsageState(u.percentage);
+    
+    $scope.usage = u;
+
     $scope.foo = 0;
     console.log('fooooooooo!');
     $scope.selectedFile = false;
