@@ -110,10 +110,8 @@
 			<div class="panel panel-default preview">
 				<div class="panel-body">
 					
-					<img ng-src="images/ext-icons/512px/{{selectedFile.ext}}.png" 
-						fallback-src="images/ext-icons/512px/_blank.png" alt="{{selectedFile.mimetype}}" 
-						class="img-responsive" style="margin:auto;">
 					<div class="well well-lg">
+					  <button class="btn btn-primary pull-right">Share <span class="glyphicon glyphicon-share-alt"></span></button>
 						<dl class="dl-horizontal">
 						  <dt>Filename</dt>
 						  <dd>{{selectedFile.name}}</dd>
@@ -129,6 +127,9 @@
 						  <dd>{{selectedFile.mimetype}}</dd>
 					  </dl>
 					</div>
+					<img ng-src="images/ext-icons/512px/{{selectedFile.ext}}.png" 
+						fallback-src="images/ext-icons/512px/_blank.png" alt="{{selectedFile.mimetype}}" 
+						class="img-responsive" style="margin:auto;">
 				</div>
 			</div>
 		</div>

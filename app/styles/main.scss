@@ -1,4 +1,4 @@
-$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+$icon-font-path: "../bower_components/bootstrap-sass/vendor/assets/fonts/bootstrap/";
 
 @import 'bootstrap-sass/vendor/assets/stylesheets/bootstrap';
 
@@ -105,7 +105,7 @@ body {
 .preview {
     position: fixed;
     bottom: 0;
-    width: 50%;
+    left: 50%;
     margin-left: 15px;
     top: 70px;
     right: 15px;
@@ -113,11 +113,12 @@ body {
 }
 .fadeout.ng-hide {
     display: initial!important;
-    right: -50%;
+    opacity: 0;
+    z-index: -1;
 }
 .fadein {
-    transition: all ease-in-out 0.3s 0.3s;
+    transition: opacity ease-in-out 0.3s 0.3s;
 }
 .fadeout {
-    transition: all ease-in-out 0.3s 0s;
+    transition: opacity ease-in-out 0.3s 0s;
 }
