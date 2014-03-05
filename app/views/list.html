@@ -85,13 +85,13 @@
     <h4 class="list-group-item-heading">
 			<div class="row">
 				<div class="col-md-7">
-					file.name
+					Filename
 				</div>
 				<div class="col-md-2">
-					file.size
+					Size
 				</div>
 				<div class="col-md-3">
-					file.modified
+					Uploaded
 				</div>
 			</div>
     </h4>
@@ -107,12 +107,12 @@
 			</div>
 			<div class="col-md-3">
 				<time datetime="{{file.modified *1000 | date:'yyyy-MM-ddTHH:mm:ssZ'}}">
-					{{file.modified *1000 | date:'shortDate'}}
+					{{file.modified *1000 | date:'yyyy-MM-dd'}}
 				</time>
 			</div>
 		</div>
 		<div class="row" ng-show="selectedFile==file && hasSelectedFile">
-			<div class="col-md-12">
+			<div class="col-md-10">
 						<dl class="dl-horizontal">
 						  <dt>Filename</dt>
 						  <dd>{{file.name}}</dd>
@@ -127,7 +127,18 @@
 						  <dt>Mimetype</dt>
 						  <dd>{{file.mimetype}}</dd>
 					  </dl>
-					  <button class="btn btn-primary pull-right">Share <span class="glyphicon glyphicon-share-alt"></span></button>
+			</div>
+			<div class="col-md-2">
+			  <a href="#" class="btn btn-xs pull-right" 
+			  ng-class="overclass ? 'btn-danger' : 'btn-default'" 
+			  ng-mouseenter="overclass = !overclass" 
+			  ng-mouseleave="overclass = !overclass" 
+			  style="position: relative; top: -15px;">
+				  <span class="glyphicon glyphicon-remove"></span>
+			  </a>
+			  <a href="#" class="btn btn-primary pull-right btn-lg" style="position: relative; bottom: -25px;">
+			    Share <span class="glyphicon glyphicon-share-alt"></span>
+		    </a>
 			</div>
 		</div>
   </li>
