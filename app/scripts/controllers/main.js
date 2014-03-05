@@ -44,19 +44,23 @@ angular.module('uploadApp')
 
     $scope.foo = 0;
     console.log('fooooooooo!');
-    $scope.selectedFile = false;
 
     $scope.test = function(file) {
       console.log('haaardogay desu!');
       console.log(file);
     };
+
+
+    $scope.selectedFile = null;
+    $scope.hasSelectedFile = false;
     $scope.toggleSelect = function(file) {
       console.log('bidibidi');
-      if(file === $scope.selectedFile) {
+      if($scope.selectedFile === file && $scope.hasSelectedFile) {
         console.log('null');
-        $scope.selectedFile = null;
+        $scope.hasSelectedFile = false;
       } else {
         console.log('file');
+        $scope.hasSelectedFile = true;
         $scope.selectedFile = file;
       }
     };

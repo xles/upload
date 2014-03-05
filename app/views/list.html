@@ -79,7 +79,60 @@
 
 <div class="container-fluid" ng-controller="MainCtrl">
 	<div class="row">
-		<div ng-class="selectedFile ? 'col-md-6 squeeze' : 'col-md-12 stretch'">
+		<div class="" ng-class="hasSelectedFile ? 'col-md-6 squeeze' : 'col-md-8 col-md-offset-2 stretch'">
+<ul class="list-group">
+  <li class="list-group-item">
+    <h4 class="list-group-item-heading">
+			<div class="row">
+				<div class="col-md-7">
+					file.name
+				</div>
+				<div class="col-md-2">
+					file.size
+				</div>
+				<div class="col-md-3">
+					file.modified
+				</div>
+			</div>
+    </h4>
+  </li>
+  <li class="list-group-item" ng-class="(selectedFile.name==file.name && hasSelectedFile) ? 'list-group-item-info' : ''" ng-repeat="file in files" ng-click="toggleSelect(file)">
+		<div class="row">
+			<div class="col-md-7">
+			 	<img ng-src="images/ext-icons/16px/{{file.ext}}.png" fallback-src="images/ext-icons/16px/_blank.png" alt="{{file.mimetype}}">
+				<a href="{{file.path}}">{{file.name}}</a>
+			</div>
+			<div class="col-md-2">
+				{{readable(file.size)}}
+			</div>
+			<div class="col-md-3">
+				<time datetime="{{file.modified *1000 | date:'yyyy-MM-ddTHH:mm:ssZ'}}">
+					{{file.modified *1000 | date:'shortDate'}}
+				</time>
+			</div>
+		</div>
+		<div class="row" ng-show="selectedFile==file && hasSelectedFile">
+			<div class="col-md-12">
+						<dl class="dl-horizontal">
+						  <dt>Filename</dt>
+						  <dd>{{file.name}}</dd>
+						  <dt>Size</dt>
+						  <dd>{{readable(file.size)}}</dd>
+						  <dt>Last modified</dt>
+						  <dd>
+								<time datetime="{{file.modified *1000 | date:'yyyy-MM-ddTHH:mm:ssZ'}}">
+									{{file.modified *1000 | date:'longDate'}}
+								</time>
+						  </dd>
+						  <dt>Mimetype</dt>
+						  <dd>{{file.mimetype}}</dd>
+					  </dl>
+					  <button class="btn btn-primary pull-right">Share <span class="glyphicon glyphicon-share-alt"></span></button>
+			</div>
+		</div>
+  </li>
+</ul>
+<!--
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -105,11 +158,12 @@
  					</tr>
 				</tbody>
 			</table>
+-->
 		</div>
-		<div class="col-md-6" ng-show="selectedFile" ng-class="selectedFile ? 'fadein' : 'fadeout'">
+		<div class="col-md-6" ng-show="hasSelectedFile" ng-class="hasSelectedFile ? 'fadein' : 'fadeout'">
 			<div class="panel panel-default preview">
 				<div class="panel-body">
-					
+					<!--
 					<div class="well well-lg">
 					  <button class="btn btn-primary pull-right">Share <span class="glyphicon glyphicon-share-alt"></span></button>
 						<dl class="dl-horizontal">
@@ -127,6 +181,7 @@
 						  <dd>{{selectedFile.mimetype}}</dd>
 					  </dl>
 					</div>
+					-->
 					<img ng-src="images/ext-icons/512px/{{selectedFile.ext}}.png" 
 						fallback-src="images/ext-icons/512px/_blank.png" alt="{{selectedFile.mimetype}}" 
 						class="img-responsive" style="margin:auto;">
