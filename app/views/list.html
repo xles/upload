@@ -96,7 +96,7 @@
 			</div>
     </h4>
   </li>
-  <li class="list-group-item" ng-class="(selectedFile.name==file.name && hasSelectedFile) ? 'list-group-item-info' : ''" ng-repeat="file in files" ng-click="toggleSelect(file)">
+  <li class="list-group-item" ng-class="(selectedFile==file && hasSelectedFile) ? 'list-group-item-info' : ''" ng-repeat="file in files" ng-click="toggleSelect(file)">
 		<div class="row">
 			<div class="col-md-7">
 			 	<img ng-src="images/ext-icons/16px/{{file.ext}}.png" fallback-src="images/ext-icons/16px/_blank.png" alt="{{file.mimetype}}">
@@ -111,7 +111,7 @@
 				</time>
 			</div>
 		</div>
-		<div class="row" ng-show="selectedFile==file && hasSelectedFile">
+		<div class="row" ng-class="(selectedFile==file && hasSelectedFile) ? 'squeeze' : 'stretch'" ng-show="selectedFile==file && hasSelectedFile">
 			<div class="col-md-10">
 						<dl class="dl-horizontal">
 						  <dt>Filename</dt>

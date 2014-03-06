@@ -123,10 +123,10 @@ li.list-group-item-danger:hover {
 }
 
 .squeeze {
-    transition: margin-left ease-in-out 0.3s 0s, width ease-in-out 0.3s 0s;
+    transition: all ease-in-out 0.3s 0s;
 }
 .stretch {
-    transition: margin-left ease-in-out 0.3s 0.3s, width ease-in-out 0.3s 0.3s;
+    transition: all ease-in-out 0.3s 0.3s;
 }
 .preview {
     position: fixed;
