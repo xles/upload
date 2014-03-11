@@ -3,4 +3,4 @@
 	url = https://github.com/teambox/Free-file-icons
 [submodule "backend"]
 	path = backend
-	url = git@github.com:xles/upload-backend.git
+	url = git@github.com:xles/upload-yii.git
